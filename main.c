@@ -588,7 +588,11 @@ void on_keypress(XKeyEvent *kev)
 		return;
 	if (ksym == XK_Escape && MODMASK(kev->state) == 0) {
 		extprefix = False;
+    } else if (*XKeysymToString(ksym) == 'D') {
+        run_key_handler(XKeysymToString(ksym), kev->state & ~sh);
+        dirty = true;
 	} else if (extprefix) {
+        printf("%d", kev->state & ~sh);
 		run_key_handler(XKeysymToString(ksym), kev->state & ~sh);
 		extprefix = False;
 	} else if (key >= '0' && key <= '9') {
